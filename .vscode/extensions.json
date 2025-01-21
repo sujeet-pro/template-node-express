@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "aaron-bond.better-comments",
+        "dotenv.dotenv-vscode",
+        "editorconfig.editorconfig",
+        "usernamehw.errorlens",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "yoavbls.pretty-ts-errors",
+        "rangav.vscode-thunder-client",
+        "gruntfuggly.todo-tree",
+        "ms-vscode.vscode-js-profile-flame"
+    ]
+}

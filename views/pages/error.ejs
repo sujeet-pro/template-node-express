@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Something Went Wrong</title>
+    <%- include('../partials/head'); %>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <%- include('../partials/header'); %>
+    <main class="flex flex-col justify-center items-center flex-grow p-4">
+      <div class="text-9xl flex justify-center"><%- include('../icons/sad.svg'); %></div>
+      <h1 class="text-6xl mt-4"><%= status %> - <%= message %></h1>
+      <p class="text-xl my-2">Oops! It looks like you've taken a wrong turn.</p>
+      <p class="text-xl mt-2">
+        This page doesn't exist, but don't worry, even the best explorers get lost sometimes.
+      </p>
+      <% if (error && error.stack) { %>
+      <details>
+        <summary>Error Stack</summary>
+        <pre class="text-left"><%= error.stack %></pre>
+      </details>
+      <% } %>
+    </main>
+    <%- include('../partials/footer'); %>
+  </body>
+</html>
