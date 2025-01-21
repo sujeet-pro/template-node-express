@@ -52,6 +52,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AuthDetail'
+        '406':
+          $ref: '#/components/responses/NotAcceptableError'
     post:
       summary: Find product by Id
       description: Retuns a single product
@@ -70,6 +72,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AuthDetail'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '406':
+          $ref: '#/components/responses/NotAcceptableError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /api/v1/samples/protected/hello-world:
     get:
       summary: Hello world for a protected endpoint
@@ -86,11 +96,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuthProtected'
         '401':
-          description: Unauthorized
-          content:
-            text/html:
-              schema:
-                type: string
+          $ref: '#/components/responses/UnauthorizedError'
+        '406':
+          $ref: '#/components/responses/NotAcceptableError'
 components:
   securitySchemes:
     bearerAuth:
@@ -170,3 +178,34 @@ components:
           type: string
           description: unique identifier for the token
           example: '57fbb631-8fbf-4312-b566-cbacc3cdfcb9'
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        text/html:
+          schema:
+            type: string
+    BadRequestError:
+      description: Bad Request
+      content:
+        text/html:
+          schema:
+            type: string
+    NotAcceptableError:
+      description: Not Acceptable
+      content:
+        text/html:
+          schema:
+            type: string
+    NotFoundError:
+      description: Not Found
+      content:
+        text/html:
+          schema:
+            type: string
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        text/html:
+          schema:
+            type: string
