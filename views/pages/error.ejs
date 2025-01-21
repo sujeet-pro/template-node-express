@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Something Went Wrong</title>
+    <title> <%= status %> - <%= error.name %> </title>
     <%- include('../partials/head'); %>
   </head>
   <body class="flex flex-col min-h-screen">
     <%- include('../partials/header'); %>
     <main class="flex flex-col justify-center items-center flex-grow p-4">
       <div class="text-9xl flex justify-center"><%- include('../icons/sad.svg'); %></div>
-      <h1 class="text-6xl mt-4"><%= status %> - <%= message %></h1>
-      <p class="text-xl my-2">Oops! It looks like you've taken a wrong turn.</p>
+      <h1 class="text-6xl mt-4"><%= status %> - <%= error.name %></h1>
+      <p class="text-6xl mt-4"><%= message %></p>
+      <p class="text-xl my-2">Yikes! Something went wrong on our end.</p>
       <p class="text-xl mt-2">
-        This page doesn't exist, but don't worry, even the best explorers get lost sometimes.
+        Our server is feeling a bit under the weather. Please try again later, or give it some soup!
       </p>
       <% if (error && error.stack) { %>
       <details>

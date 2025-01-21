@@ -1,0 +1,172 @@
+openapi: 3.1.0
+info:
+  title: api-service
+  description: >-
+    Details of the project. This can be multi-line and supportts markdown
+
+    - Supports markdown
+    - Multi-line
+
+    - To Edit, visit [editor-next swagger.io](https://editor-next.swagger.io/)
+  version: 1.0.1
+externalDocs:
+  description: Github Link
+  url: https://github.com/sujeet-pro/template-node-express
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: probes
+    description: Endpoints for K8 Probes
+  - name: samples-auth
+    description: Sample Auth - JWT Issuer
+  - name: samples-protected
+    description: Sample Auth - JWT Issuer
+paths:
+  /probes/health:
+    get:
+      tags:
+        - probes
+      summary: Health Check
+      responses:
+        '204':
+          description: Successful operation
+  /probes/ready:
+    get:
+      tags:
+        - probes
+      summary: Rediness Check
+      responses:
+        '204':
+          description: Server Is Ready
+  /api/v1/samples/auth:
+    get:
+      summary: Get Auth Details
+      description: Returns auth details for hardcoded user details
+      operationId: getDefaultAuth
+      tags:
+        - samples-auth
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthDetail'
+    post:
+      summary: Find product by Id
+      description: Retuns a single product
+      operationId: getAuthForPayload
+      tags:
+        - samples-auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequestPayload'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthDetail'
+  /api/v1/samples/protected/hello-world:
+    get:
+      summary: Hello world for a protected endpoint
+      description: Needs Auth Headers
+      tags:
+        - samples-protected
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthProtected'
+        '401':
+          description: Unauthorized
+          content:
+            text/html:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AuthDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          description: object uuid
+        name:
+          type: string
+          description: hardcoded name
+        token:
+          type: string
+          description: jwt string token (signed)
+        payload:
+          $ref: '#/components/schemas/AuthRequestPayload'
+    AuthRequestPayload:
+      type: object
+      properties:
+        sub:
+          type: string
+          description: uuid for the user/entiry
+        name:
+          type: string
+          description: name of the entity
+        admin:
+          type: boolean
+          description: is the user admin
+    AuthProtected:
+      type: object
+      properties:
+        message:
+          type: string
+        auth:
+          $ref: '#/components/schemas/AuthPayload'
+    AuthPayload:
+      type: object
+      properties:
+        sub:
+          type: string
+          description: uuid for the user/entity
+          example: '1234567890'
+        name:
+          type: string
+          description: name of the entity
+          example: 'John Doe'
+        admin:
+          type: boolean
+          description: is the user admin
+          example: false
+        iat:
+          type: integer
+          description: issued at timestamp
+          example: 1737487793
+        nbf:
+          type: integer
+          description: not before timestamp
+          example: 1737487794
+        exp:
+          type: integer
+          description: expiration timestamp
+          example: 1737491393
+        aud:
+          type: string
+          description: audience for which the token is intended
+          example: 'https://sujeet.pro/protected'
+        iss:
+          type: string
+          description: issuer of the token
+          example: 'https://sujeet.pro'
+        jti:
+          type: string
+          description: unique identifier for the token
+          example: '57fbb631-8fbf-4312-b566-cbacc3cdfcb9'

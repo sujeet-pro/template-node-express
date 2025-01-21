@@ -8,15 +8,21 @@ export const errorMiddleware: ErrorRequestHandler = (
   res: Response,
   _next: NextFunction,
 ) => {
-  const httpError = createHttpError.isHttpError(err)
-    ? err
-    : createHttpError.InternalServerError(err.message) //  createHttpError(500, err);
+  let httpError
+  if (createHttpError.isHttpError(err)) {
+    httpError = err
+  } else if (err.name === 'UnauthorizedError') {
+    httpError = createHttpError.Unauthorized(err.message)
+  } else {
+    httpError = createHttpError.InternalServerError(err.message)
+  }
   const status: number = httpError.status || 500
   const message: string = httpError.message || 'Something Went Wrong'
 
   res.status(status)
   if (status === 404) {
-    res.render('pages/not-found.ejs', {})
+    // res.render('pages/not-found.ejs', {})
+    res.render('pages/error.ejs', {})
   }
 
   // set locals, only providing error in development
